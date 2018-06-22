@@ -32,15 +32,16 @@ func init() {
 func main() {
 	r := gin.Default()
 
+	r.Static("/js", "./public/js")
+	r.Static("/css", "./public/css")
 	r.LoadHTMLGlob("views/*")
 
 	r.GET("/", func(c *gin.Context) {
 		if service.Credential != nil {
-			info := service.GetUserInfo()
-			c.HTML(http.StatusOK, "list.html.tpl", info)
+			c.HTML(http.StatusOK, "index.html", nil)
 			return
 		}
-		c.HTML(http.StatusOK, "first.html", nil)
+		c.HTML(http.StatusOK, "index.html", nil)
 	})
 	r.GET("/login", func(c *gin.Context) {
 		c.Redirect(http.StatusTemporaryRedirect, "https://slack.com/oauth/authorize?client_id="+clientID+"&scope=chat:write:user%20users:read")
