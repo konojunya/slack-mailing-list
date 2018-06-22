@@ -29,6 +29,8 @@ func init() {
 	clientSecret = os.Getenv("CLIENT_SECRET")
 }
 
+const COOKIE_NAME = "slack-mailing-list-authed"
+
 func main() {
 	r := gin.Default()
 
@@ -37,10 +39,6 @@ func main() {
 	r.LoadHTMLGlob("views/*")
 
 	r.GET("/", func(c *gin.Context) {
-		if service.Credential != nil {
-			c.HTML(http.StatusOK, "index.html", nil)
-			return
-		}
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
 	r.GET("/login", func(c *gin.Context) {
@@ -78,6 +76,15 @@ func main() {
 		json.Unmarshal(byteArray, &cre)
 		service.SetConfig(cre)
 
+		c.SetCookie(
+			COOKIE_NAME,
+			"true",
+			1000*60,
+			"/",
+			"127.0.0.1",
+			false,
+			false,
+		)
 		c.Redirect(http.StatusTemporaryRedirect, "/")
 
 	})

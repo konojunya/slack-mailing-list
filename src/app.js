@@ -1,7 +1,7 @@
 import React from "react"
 import { hydrate } from "react-dom";
 
-import App from "./components/Index"
+import App from "./components/App"
 
 hydrate(
   <App />,
