@@ -107,17 +107,6 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/c
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?modules!./src/components/Main/style.css":
-/*!*************************************************************************!*\
-  !*** ./node_modules/css-loader?modules!./src/components/Main/style.css ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \".-xjwMWnlRydfvD50wKmjQ{color:red}\", \"\"]);\n\n// exports\nexports.locals = {\n\t\"title\": \"-xjwMWnlRydfvD50wKmjQ\"\n};\n\n//# sourceURL=webpack:///./src/components/Main/style.css?./node_modules/css-loader?modules");
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/lib/css-base.js":
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
@@ -382,21 +371,9 @@ eval("\nvar content = __webpack_require__(/*! !../../../node_modules/css-loader?
   !*** ./src/components/Main/index.jsx ***!
   \***************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _style = __webpack_require__(/*! ./style.css */ \"./src/components/Main/style.css\");\n\nvar _style2 = _interopRequireDefault(_style);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar Main = function (_React$Component) {\n  _inherits(Main, _React$Component);\n\n  function Main() {\n    _classCallCheck(this, Main);\n\n    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));\n  }\n\n  _createClass(Main, [{\n    key: \"render\",\n    value: function render() {\n      return _react2.default.createElement(\n        \"h1\",\n        { className: _style2.default.title },\n        \"authed\"\n      );\n    }\n  }]);\n\n  return Main;\n}(_react2.default.Component);\n\nexports.default = Main;\n\n//# sourceURL=webpack:///./src/components/Main/index.jsx?");
-
-/***/ }),
-
-/***/ "./src/components/Main/style.css":
-/*!***************************************!*\
-  !*** ./src/components/Main/style.css ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("\nvar content = __webpack_require__(/*! !../../../node_modules/css-loader?modules!./style.css */ \"./node_modules/css-loader/index.js?modules!./src/components/Main/style.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./src/components/Main/style.css?");
+eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nSyntaxError: Unexpected token (34:8)\\n\\n\\u001b[0m \\u001b[90m 32 | \\u001b[39m\\u001b[36mexport\\u001b[39m \\u001b[36mdefault\\u001b[39m \\u001b[36mclass\\u001b[39m \\u001b[33mMain\\u001b[39m \\u001b[36mextends\\u001b[39m \\u001b[33mReact\\u001b[39m\\u001b[33m.\\u001b[39m\\u001b[33mComponent\\u001b[39m {\\n \\u001b[90m 33 | \\u001b[39m  \\n\\u001b[31m\\u001b[1m>\\u001b[22m\\u001b[39m\\u001b[90m 34 | \\u001b[39m  state \\u001b[33m=\\u001b[39m {\\n \\u001b[90m    | \\u001b[39m        \\u001b[31m\\u001b[1m^\\u001b[22m\\u001b[39m\\n \\u001b[90m 35 | \\u001b[39m    users\\u001b[33m:\\u001b[39m \\u001b[36mnull\\u001b[39m\\n \\u001b[90m 36 | \\u001b[39m  }\\n \\u001b[90m 37 | \\u001b[39m\\u001b[0m\\n\");\n\n//# sourceURL=webpack:///./src/components/Main/index.jsx?");
 
 /***/ })
 
