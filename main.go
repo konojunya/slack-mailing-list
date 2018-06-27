@@ -97,8 +97,22 @@ func main() {
 		if userList.Ok {
 			c.JSON(http.StatusOK, userList)
 		} else {
-			log.Println("user list not ok")
 			log.Println(userList.Error)
+			c.AbortWithStatus(http.StatusInternalServerError)
+		}
+	})
+	r.GET("/api/channels", func(c *gin.Context) {
+		nextCursor := c.Param("next_cursor")
+		channelList, err := service.GetChannels(nextCursor)
+		if err != nil {
+			log.Println(err)
+			c.AbortWithError(http.StatusInternalServerError, err)
+		}
+
+		if channelList.Ok {
+			c.JSON(http.StatusOK, channelList)
+		} else {
+			log.Println(channelList.Error)
 			c.AbortWithStatus(http.StatusInternalServerError)
 		}
 	})

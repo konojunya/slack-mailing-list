@@ -2,6 +2,9 @@ import React from "react"
 import styles from "./style.css"
 import client from "../../api"
 
+// components
+import Header from "../modules/Header"
+
 export default class Main extends React.Component {
 
   constructor(props) {
@@ -18,7 +21,7 @@ export default class Main extends React.Component {
   render() {
     return (
       <div>
-        <h1>hello</h1>
+        <Header />
         <ul>
         {this.state.members.map(member => (
           <li key={member.id} style={{margin: "10px 0"}}>

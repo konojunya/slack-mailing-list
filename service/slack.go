@@ -41,6 +41,18 @@ type UserList struct {
 	Error            string           `json:"error"`
 }
 
+type Channel struct {
+	ID   string `json:"id"`
+	name string `json:"name"`
+}
+
+type ChannelList struct {
+	Ok               bool             `json:"ok"`
+	Channels         []Channel        `json:"channels"`
+	ResponseMetadata ResponseMetadata `json:"response_metadata"`
+	Error            string           `json:"error"`
+}
+
 type ResponseMetadata struct {
 	NextCursor string `json:"next_cursor"`
 }
@@ -59,6 +71,10 @@ func SetConfig(credential *CredentialInfo) {
 
 func GetUsers(nextCursor string) (*UserList, error) {
 	return Credential.getUsers(nextCursor)
+}
+
+func GetChannels(nextCursor string) (*ChannelList, error) {
+	return Credential.getChannels(nextCursor)
 }
 
 func PostMessage(text, channel string) error {
@@ -95,6 +111,20 @@ func (cre *CredentialInfo) postMessage(text, channel string) error {
 	fmt.Println(string(bytes))
 	fmt.Println(resp.StatusCode)
 	return nil
+}
+
+func (cre *CredentialInfo) getChannels(nextCursor string) (*ChannelList, error) {
+	token := cre.AccessToken
+	resp, err := http.Get(fmt.Sprintf("https://slack.com/api/channels.list?token=%s&cursor=%s", token, nextCursor))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	bytes, _ := ioutil.ReadAll(resp.Body)
+	var channelList ChannelList
+	json.Unmarshal(bytes, &channelList)
+
+	return &channelList, nil
 }
 
 func (cre *CredentialInfo) getUsers(nextCursor string) (*UserList, error) {

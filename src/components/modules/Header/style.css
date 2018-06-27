@@ -1,0 +1,17 @@
+header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0px 0px 1px black;
+}
+header .img {
+  width: 34px;
+}
+header .img img {
+  display: block;
+  width: 100%;
+}
+header h1 {
+  font-size: 20px;
+  margin-left: 10px;
+}
