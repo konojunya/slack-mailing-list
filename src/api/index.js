@@ -8,9 +8,14 @@ class Client {
     })
   }
 
-  getUsers() {
-    return this.http.get("/users")
+  getUsers(nextCursor) {
+    return this.http.get(`/users?next_cursor=${nextCursor}`)
   }
+  
+  getChannels(nextCursor) {
+    return this.http.get(`/channels?next_cursor=${nextCursor}`)
+  }
+
   postMessage(text = "", userIds = []) {
     return this.http.post("/message", {
       text,

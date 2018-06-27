@@ -10,12 +10,20 @@ export default class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      members: []
+      member: {
+        list: [],
+        nextCursor: ""
+      },
+      channel: {
+        list: [],
+        nextCursor: ""
+      }
     }
   }
 
   componentWillMount() {
     this.getUsers()
+    this.getChannels()
   }
 
   render() {
@@ -23,7 +31,7 @@ export default class Main extends React.Component {
       <div>
         <Header />
         <ul>
-        {this.state.members.map(member => (
+        {this.state.member.list.map(member => (
           <li key={member.id} style={{margin: "10px 0"}}>
             <p>name: {member.name}</p>
             <p>real name: {member.real_name}</p>
@@ -32,15 +40,33 @@ export default class Main extends React.Component {
             </div>
           </li>
         ))}
+        {this.state.channel.list.map(channel => (
+          <li key={channel.id} style={{margin: "10px 0"}}>
+            <p>{channel.name}</p>
+          </li>
+        ))}
         </ul>
       </div>
     )
   }
 
-  async getUsers() {
-    const res = await client.getUsers()
+  async getUsers(nextCursor = "") {
+    const res = await client.getUsers(nextCursor)
     this.setState({
-      members: res.data.members
+      member: {
+        list: [...this.state.member.list, ...res.data.members],
+        nextCursor: res.data.response_metadata.next_cursor
+      }
+    })
+  }
+
+  async getChannels(nextCursor = "") {
+    const res = await client.getChannels(nextCursor)
+    this.setState({
+      channel: {
+        list: [...this.state.channel.list, ...res.data.channels],
+        nextCursor: res.data.response_metadata.next_cursor
+      }
     })
   }
 }
