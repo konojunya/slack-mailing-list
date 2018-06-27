@@ -49,7 +49,7 @@ func main() {
 		c.HTML(http.StatusOK, "login.html", nil)
 	})
 	r.GET("/auth", func(c *gin.Context) {
-		c.Redirect(http.StatusTemporaryRedirect, "https://slack.com/oauth/authorize?client_id="+clientID+"&scope=chat:write:user%20users:read")
+		c.Redirect(http.StatusTemporaryRedirect, "https://slack.com/oauth/authorize?client_id="+clientID+"&scope=chat:write:user users:read channels:read")
 	})
 	r.GET("/oauth", func(c *gin.Context) {
 		code := c.Request.URL.Query().Get("code")

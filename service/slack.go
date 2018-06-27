@@ -43,7 +43,7 @@ type UserList struct {
 
 type Channel struct {
 	ID   string `json:"id"`
-	name string `json:"name"`
+	Name string `json:"name"`
 }
 
 type ChannelList struct {
