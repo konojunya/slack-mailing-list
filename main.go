@@ -34,6 +34,7 @@ func main() {
 
 	r.Static("/js", "./public/js")
 	r.Static("/css", "./public/css")
+	r.Static("/images", "./public/images")
 	r.LoadHTMLGlob("views/*")
 
 	r.GET("/", func(c *gin.Context) {
