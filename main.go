@@ -9,9 +9,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/CA19Creators/slack-mailing-list/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/konojunya/slack-oauth/service"
 )
 
 var (
@@ -29,8 +29,6 @@ func init() {
 	clientSecret = os.Getenv("CLIENT_SECRET")
 }
 
-const COOKIE_NAME = "slack-mailing-list-authed"
-
 func main() {
 	r := gin.Default()
 
@@ -39,9 +37,17 @@ func main() {
 	r.LoadHTMLGlob("views/*")
 
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
+		if service.Authed() {
+			c.HTML(http.StatusOK, "index.html", nil)
+			return
+		} else {
+			c.Redirect(http.StatusTemporaryRedirect, "/login")
+		}
 	})
 	r.GET("/login", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "login.html", nil)
+	})
+	r.GET("/auth", func(c *gin.Context) {
 		c.Redirect(http.StatusTemporaryRedirect, "https://slack.com/oauth/authorize?client_id="+clientID+"&scope=chat:write:user%20users:read")
 	})
 	r.GET("/oauth", func(c *gin.Context) {
@@ -76,17 +82,21 @@ func main() {
 		json.Unmarshal(byteArray, &cre)
 		service.SetConfig(cre)
 
-		c.SetCookie(
-			COOKIE_NAME,
-			"true",
-			1000*60,
-			"/",
-			"127.0.0.1",
-			false,
-			false,
-		)
 		c.Redirect(http.StatusTemporaryRedirect, "/")
 
+	})
+	r.GET("/api/users", func(c *gin.Context) {
+		nextCursor := c.Param("next_cursor")
+		userList, err := service.GetUsers(nextCursor)
+		if err != nil {
+			c.AbortWithError(http.StatusInternalServerError, err)
+		}
+
+		if userList.Ok {
+			c.JSON(http.StatusOK, userList)
+		} else {
+			c.AbortWithStatus(http.StatusInternalServerError)
+		}
 	})
 
 	r.Run(":7000")

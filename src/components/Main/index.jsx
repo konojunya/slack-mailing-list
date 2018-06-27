@@ -1,52 +1,43 @@
 import React from "react"
 import styles from "./style.css"
-import { ApolloProvider, graphql } from 'react-apollo'
-import gql from "graphql-tag";
-import { ApolloClient } from "apollo-boost";
-
-const client = new ApolloClient({
-  uri: `${location.origin}/graphql`
-})
-
-const UsersSearchQuery = gql`
-  query {
-    users
-  }
-`
-
-class Users extends React.Component {
-  render() {
-    let users = []
-    if(this.props.data) {
-      users = this.props.data.users
-    }
-
-    return (
-      <ul>
-        {users.map((user, i) => <li key={index}>hoge</li>)}
-      </ul>
-    )
-  }
-}
+import client from "../../api"
 
 export default class Main extends React.Component {
-  
-  state = {
-    users: null
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      members: []
+    }
   }
 
   componentWillMount() {
-    const UsersWithQuery = graphql(UsersSearchQuery)(Users)
-    this.setState({
-      users: <UsersWithQuery />
-    })
+    this.getUsers()
   }
 
   render() {
     return (
-      <ApolloProvider client={client}>
-        {this.state.users}
-      </ApolloProvider>
+      <div>
+        <h1>hello</h1>
+        <ul>
+        {this.state.members.map(member => (
+          <li key={member.id} style={{margin: "10px 0"}}>
+            <p>name: {member.name}</p>
+            <p>real name: {member.real_name}</p>
+            <div style={{width: "50px"}}>
+              <img src={member.profile.image_192} alt="icon" style={{display: "block", width: "100%"}}/>
+            </div>
+          </li>
+        ))}
+        </ul>
+      </div>
     )
+  }
+
+  async getUsers() {
+    const res = await client.getUsers()
+    this.setState({
+      members: res.data.members
+    })
   }
 }

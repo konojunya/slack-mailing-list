@@ -17,42 +17,55 @@ type CredentialInfo struct {
 type Profile struct {
 	DisplayName   string `json:"display_name"`
 	ImageOriginal string `json:"image_original"`
+	Image192      string `json:"image_192"`
 }
 
 type User struct {
-	ID       string  `json:"id"`
-	TeamID   string  `json:"team_id"`
-	Name     string  `json:"name"`
-	RealName string  `json:"real_name"`
-	Profile  Profile `json:"profile"`
+	ID        string  `json:"id"`
+	TeamID    string  `json:"team_id"`
+	Name      string  `json:"name"`
+	RealName  string  `json:"real_name"`
+	Profile   Profile `json:"profile"`
+	IsBot     bool    `json:"is_bot"`
+	IsAppUser bool    `json:"is_app_user"`
 }
 
-type UserInfo struct {
-	User User `json:"user"`
+type UserList struct {
+	Ok               bool             `json:"ok"`
+	Members          []User           `json:"members"`
+	ResponseMetadata ResponseMetadata `json:"response_metadata"`
+}
+
+type ResponseMetadata struct {
+	NextCursor string `json:"next_cursor"`
 }
 
 var (
 	Credential *CredentialInfo
 )
 
+func Authed() bool {
+	return Credential != nil
+}
+
 func SetConfig(credential *CredentialInfo) {
 	Credential = credential
 }
 
-func GetUserInfo() UserInfo {
-	return Credential.getUserInfo()
+func GetUsers(nextCursor string) (*UserList, error) {
+	return Credential.getUsers(nextCursor)
 }
 
-func (cre *CredentialInfo) getUserInfo() UserInfo {
+func (cre *CredentialInfo) getUsers(nextCursor string) (*UserList, error) {
 	token := cre.AccessToken
-	userID := cre.UserID
-	resp, err := http.Get("https://slack.com/api/users.info?token=" + token + "&user=" + userID)
+	resp, err := http.Get("https://slack.com/api/users.list?token=" + token + "&cursor=" + nextCursor)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	defer resp.Body.Close()
 	bytes, _ := ioutil.ReadAll(resp.Body)
-	var info UserInfo
-	json.Unmarshal(bytes, &info)
-	return info
+	var userList UserList
+	json.Unmarshal(bytes, &userList)
+
+	return &userList, nil
 }
