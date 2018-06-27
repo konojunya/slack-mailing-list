@@ -2,8 +2,12 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
 type CredentialInfo struct {
@@ -34,6 +38,7 @@ type UserList struct {
 	Ok               bool             `json:"ok"`
 	Members          []User           `json:"members"`
 	ResponseMetadata ResponseMetadata `json:"response_metadata"`
+	Error            string           `json:"error"`
 }
 
 type ResponseMetadata struct {
@@ -56,9 +61,45 @@ func GetUsers(nextCursor string) (*UserList, error) {
 	return Credential.getUsers(nextCursor)
 }
 
+func PostMessage(text, channel string) error {
+	return Credential.postMessage(text, channel)
+}
+
+func (cre *CredentialInfo) postMessage(text, channel string) error {
+	token := cre.AccessToken
+	values := url.Values{}
+
+	fmt.Println("channnel", channel)
+	values.Add("token", token)
+	values.Add("channel", channel)
+	values.Add("text", text)
+	values.Add("as_user", "true")
+	req, err := http.NewRequest(
+		"POST",
+		"https://slack.com/api/chat.postMessage",
+		strings.NewReader(values.Encode()),
+	)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	defer resp.Body.Close()
+	bytes, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(bytes))
+	fmt.Println(resp.StatusCode)
+	return nil
+}
+
 func (cre *CredentialInfo) getUsers(nextCursor string) (*UserList, error) {
 	token := cre.AccessToken
-	resp, err := http.Get("https://slack.com/api/users.list?token=" + token + "&cursor=" + nextCursor)
+	resp, err := http.Get(fmt.Sprintf("https://slack.com/api/users.list?token=%s&cursor=%s", token, nextCursor))
 	if err != nil {
 		return nil, err
 	}

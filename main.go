@@ -89,13 +89,39 @@ func main() {
 		nextCursor := c.Param("next_cursor")
 		userList, err := service.GetUsers(nextCursor)
 		if err != nil {
+			log.Println(err)
 			c.AbortWithError(http.StatusInternalServerError, err)
 		}
 
 		if userList.Ok {
 			c.JSON(http.StatusOK, userList)
 		} else {
+			log.Println("user list not ok")
+			log.Println(userList.Error)
 			c.AbortWithStatus(http.StatusInternalServerError)
+		}
+	})
+	r.POST("/api/message", func(c *gin.Context) {
+		var req struct {
+			Text string   `json:"text"`
+			IDs  []string `json:"ids"`
+		}
+		if err := c.BindJSON(&req); err == nil {
+			for _, id := range req.IDs {
+				_ = service.PostMessage(req.Text, id)
+			}
+			c.AbortWithStatus(http.StatusOK)
+			return
+			// if apiError != nil {
+			// 	log.Println(apiError)
+			// 	c.AbortWithStatus(http.StatusInternalServerError)
+			// 	return
+			// } else {
+			// 	c.AbortWithStatus(http.StatusCreated)
+			// 	return
+			// }
+		} else {
+			c.AbortWithStatus(http.StatusBadRequest)
 		}
 	})
 
