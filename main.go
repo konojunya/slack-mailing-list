@@ -122,6 +122,12 @@ func main() {
 			IDs  []string `json:"ids"`
 		}
 		if err := c.BindJSON(&req); err == nil {
+
+			if len(req.IDs) == 0 {
+				c.AbortWithStatus(http.StatusBadRequest)
+				return
+			}
+
 			for _, id := range req.IDs {
 				_ = service.PostMessage(req.Text, id)
 			}

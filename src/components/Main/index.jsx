@@ -53,11 +53,18 @@ export default class Main extends React.Component {
                 />
               ))}
             </ul>
-            <ChatArea />
+            <ChatArea sendTo={this.getSend()} />
           </div>
         </div>
       </div>
     )
+  }
+
+  getSend() {
+    return [
+      ...this.state.member.list.filter(member => member.selected),
+      ...this.state.channel.list.filter(channel => channel.selected),
+    ]
   }
 
   onSelectUser(e) {

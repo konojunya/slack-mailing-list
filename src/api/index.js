@@ -19,7 +19,7 @@ class Client {
   postMessage(text = "", userIds = []) {
     return this.http.post("/message", {
       text,
-      userIds
+      ids: userIds
     })
   }
 

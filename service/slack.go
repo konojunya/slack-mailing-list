@@ -85,7 +85,6 @@ func (cre *CredentialInfo) postMessage(text, channel string) error {
 	token := cre.AccessToken
 	values := url.Values{}
 
-	fmt.Println("channnel", channel)
 	values.Add("token", token)
 	values.Add("channel", channel)
 	values.Add("text", text)
@@ -107,9 +106,6 @@ func (cre *CredentialInfo) postMessage(text, channel string) error {
 		return err
 	}
 	defer resp.Body.Close()
-	bytes, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(bytes))
-	fmt.Println(resp.StatusCode)
 	return nil
 }
 
