@@ -1,3 +1,17 @@
-.title {
-  color: red;
+.container {
+  width: 100%;
+  display: flex;
+}
+.memberList {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.channelsAndTextArea {
+  width: 50%;
+}
+.channelList {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }

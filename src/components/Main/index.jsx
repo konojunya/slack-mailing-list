@@ -1,5 +1,6 @@
 import React from "react"
 import client from "../../api"
+import styles from "./style.css"
 
 // components
 import Header from "../modules/Header"
@@ -32,29 +33,70 @@ export default class Main extends React.Component {
     return (
       <div>
         <Header />
-        <ul>
-        {this.state.member.list.map(member => (
-          <UserItem
-            key={member.id}
-            member={member}
-          />
-        ))}
-        {this.state.channel.list.map(channel => (
-          <ChannelItem
-            key={channel.id}
-            name={channel.name}
-          />
-        ))}
-        </ul>
+        <div className={styles.container}>
+          <ul className={styles.memberList}>
+          {this.state.member.list.map(member => (
+            <UserItem
+              key={member.id}
+              member={member}
+              onSelectHandler={this.onSelectUser.bind(this)}
+            />
+          ))}
+          </ul>
+          <div className={styles.channelsAndTextArea}>
+            <ul className={styles.channelList}>
+              {this.state.channel.list.map(channel => (
+                <ChannelItem
+                  key={channel.id}
+                  channel={channel}
+                  onSelectHandler={this.onSelectChannel.bind(this)}
+                />
+              ))}
+            </ul>
+            <ChatArea />
+          </div>
+        </div>
       </div>
     )
+  }
+
+  onSelectUser(e) {
+    const id = e.currentTarget.dataset.id
+    this.setState({
+      member: {
+        list: this.state.member.list.map(member => (
+          Object.assign({}, member, {
+            selected: member.id === id ? !member.selected : member.selected
+          })
+        ))
+      }
+    })
+  }
+  onSelectChannel(e) {
+    const id = e.currentTarget.dataset.id
+    this.setState({
+      channel: {
+        list: this.state.channel.list.map(channel => (
+          Object.assign({}, channel, {
+            selected: channel.id === id ? !channel.selected : channel.selected
+          })
+        ))
+      }
+    })
   }
 
   async getUsers(nextCursor = "") {
     const res = await client.getUsers(nextCursor)
     this.setState({
       member: {
-        list: [...this.state.member.list, ...res.data.members],
+        list: [
+          ...this.state.member.list,
+          ...res.data.members.map(member => (
+            Object.assign({}, member, {
+              selected: false
+            })
+          ))
+        ],
         nextCursor: res.data.response_metadata.next_cursor
       }
     })
@@ -64,7 +106,14 @@ export default class Main extends React.Component {
     const res = await client.getChannels(nextCursor)
     this.setState({
       channel: {
-        list: [...this.state.channel.list, ...res.data.channels],
+        list: [
+          ...this.state.channel.list,
+          ...res.data.channels.map(channel => (
+            Object.assign({}, channel, {
+              selected: false
+            })
+          ))
+        ],
         nextCursor: res.data.response_metadata.next_cursor
       }
     })

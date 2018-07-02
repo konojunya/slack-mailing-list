@@ -1,0 +1,9 @@
+.textarea {
+  width: 100%;
+}
+.sendButton {
+  outline: none;
+  border: 1px solid blue;
+  padding: 10px;
+  font-weight: bold;
+}

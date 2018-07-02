@@ -1,8 +1,9 @@
 import React from "react"
+import styles from "./style.css"
 
 export default () => (
   <div className="wrapper">
-    <textarea name="" id="" cols="30" rows="10"></textarea>
-    <button className="send-button">送信</button>
+    <textarea cols="30" rows="10" className={styles.textarea}></textarea>
+    <button className={styles.sendButton}>送信</button>
   </div>
 )

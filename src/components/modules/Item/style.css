@@ -1,8 +1,10 @@
 .channelList {
-  width: calc(100vw / 2 / 3);
-  box-shadow: 0px 0px 1px black;
+  list-style: none;
+  width: calc(100vw / 2 / 3 - 10px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   padding: 20px 10px;
   cursor: pointer;
+  margin: 5px;
 }
 .channelId {
   font-size: 13px;
@@ -10,12 +12,14 @@
 }
 
 .userList {
-  width: calc(100vw / 2 / 3);
+  list-style: none;
+  width: calc(100vw / 2 / 3 - 10px);
   display: flex;
   align-items: center;
-  box-shadow: 0px 0px 1px black;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   padding: 10px;
   cursor: pointer;
+  margin: 5px;
 }
 .icon {
   width: 30%;
