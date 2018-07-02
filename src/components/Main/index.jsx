@@ -1,9 +1,11 @@
 import React from "react"
-import styles from "./style.css"
 import client from "../../api"
 
 // components
 import Header from "../modules/Header"
+import ChatArea from "../modules/ChatArea"
+import UserItem from "../modules/Item/user"
+import ChannelItem from "../modules/Item/channel"
 
 export default class Main extends React.Component {
 
@@ -32,18 +34,16 @@ export default class Main extends React.Component {
         <Header />
         <ul>
         {this.state.member.list.map(member => (
-          <li key={member.id} style={{margin: "10px 0"}}>
-            <p>name: {member.name}</p>
-            <p>real name: {member.real_name}</p>
-            <div style={{width: "50px"}}>
-              <img src={member.profile.image_192} alt="icon" style={{display: "block", width: "100%"}}/>
-            </div>
-          </li>
+          <UserItem
+            key={member.id}
+            member={member}
+          />
         ))}
         {this.state.channel.list.map(channel => (
-          <li key={channel.id} style={{margin: "10px 0"}}>
-            <p>{channel.name}</p>
-          </li>
+          <ChannelItem
+            key={channel.id}
+            name={channel.name}
+          />
         ))}
         </ul>
       </div>

@@ -12,8 +12,8 @@
     "url": "git+ssh://git@github.com/CA19Creators/slack-mailing-list.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "konojunya <junya.developer@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/CA19Creators/slack-mailing-list/issues"
   },
