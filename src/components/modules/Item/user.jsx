@@ -9,6 +9,8 @@ const Item = ({ member, onSelectHandler }) => (
     <div className={styles.names}>
       <p className={styles.realName}>{member.real_name}</p>
       <p className={styles.userId}>@{member.name}</p>
+      {member.is_bot && (<small>BOT</small>)}
+      {member.is_app_user && (<small>APP</small>)}
     </div>
   </li>
 )
