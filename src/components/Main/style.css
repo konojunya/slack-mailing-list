@@ -4,6 +4,8 @@
 }
 .memberList {
   width: 50%;
+  height: calc(100vh - 70px);
+  overflow: scroll;
   display: flex;
   flex-wrap: wrap;
 }

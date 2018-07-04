@@ -2,6 +2,15 @@ import React from "react"
 import styles from "./style.css"
 import client from "../../../api"
 
+const toastConfig = {
+  position: "top-right",
+  autoClose: 3000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true
+}
+
 export default class ChatArea extends React.Component {
 
   constructor(props) {
@@ -27,7 +36,15 @@ export default class ChatArea extends React.Component {
     })
   }
 
-  send() {
-    client.postMessage(this.state.value, this.props.sendTo.map(to => to.id))
+  async send() {
+    const res = await client.postMessage(this.state.value, this.props.sendTo.map(to => to.id))
+    if(res.status === 200) {
+      this.setState({
+        value: ""
+      })
+      this.props.clear()
+    } else {
+      alert("エラーが発生しました。")
+    }
   }
 }

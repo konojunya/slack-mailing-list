@@ -53,7 +53,7 @@ export default class Main extends React.Component {
                 />
               ))}
             </ul>
-            <ChatArea sendTo={this.getSend()} />
+            <ChatArea sendTo={this.getSend()} clear={this.clearSelect.bind(this)} />
           </div>
         </div>
       </div>
@@ -65,6 +65,13 @@ export default class Main extends React.Component {
       ...this.state.member.list.filter(member => member.selected),
       ...this.state.channel.list.filter(channel => channel.selected),
     ]
+  }
+
+  clearSelect() {
+    this.setState({
+      member: { list: this.state.member.list.map(member => Object.assign({}, member, { selected: false })) },
+      channel: { list: this.state.channel.list.map(channel => Object.assign({}, channel, { selected: false })) },
+    })
   }
 
   onSelectUser(e) {

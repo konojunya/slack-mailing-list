@@ -22,7 +22,8 @@
     "axios": "^0.18.0",
     "js-cookie": "^2.2.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-toastify": "^4.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
