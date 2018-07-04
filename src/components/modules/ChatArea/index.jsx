@@ -2,15 +2,6 @@ import React from "react"
 import styles from "./style.css"
 import client from "../../../api"
 
-const toastConfig = {
-  position: "top-right",
-  autoClose: 3000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true
-}
-
 export default class ChatArea extends React.Component {
 
   constructor(props) {
@@ -23,7 +14,7 @@ export default class ChatArea extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className={styles.wrapper}>
         <textarea cols="30" rows="10" className={styles.textarea} value={this.state.value} onChange={this.onTextChange.bind(this)}></textarea>
         <button className={styles.sendButton} onClick={this.send.bind(this)}>送信</button>
       </div>
